@@ -12,3 +12,9 @@ export async function lint(preset, dir, file) {
   assert.deepEqual(fatal, [], 'config must load and parse without fatal errors');
   return result.messages.map(m => m.ruleId);
 }
+
+export async function lintIgnored(preset, dir, file) {
+  const cwd = path.join(fixtures, dir);
+  const eslint = new ESLint({ cwd, overrideConfigFile: true, overrideConfig: preset({ tsconfigRootDir: cwd }) });
+  return { ignored: await eslint.isPathIgnored(path.join(cwd, file)) };
+}

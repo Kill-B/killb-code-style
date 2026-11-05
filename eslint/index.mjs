@@ -19,7 +19,7 @@ export function base(options) {
  * @param {import('./core.mjs').KillbOptions & { allowConsole?: string[], appFiles?: string[] }} options
  */
 export function node(options = {}) {
-  const { allowConsole = [], appFiles = ['src/**/*.{ts,mts,cts,js,mjs,cjs}'] } = options;
+  const { allowConsole = [], appFiles = ['**/src/**/*.{ts,mts,cts,js,mjs,cjs}'] } = options;
 
   return [
     ...core(options),
