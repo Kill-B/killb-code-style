@@ -5,7 +5,7 @@ import { core, DEFAULT_IGNORES, prettierLast } from './core.mjs';
 export { DEFAULT_IGNORES };
 
 /**
- * TypeScript code that is not tied to a runtime (libraries such as the sdk).
+ * TypeScript code that is not tied to a runtime (libraries such as API client SDKs).
  * @param {import('./core.mjs').KillbOptions} options
  */
 export function base(options) {
