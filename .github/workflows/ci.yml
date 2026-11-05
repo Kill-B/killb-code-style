@@ -43,8 +43,11 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
-          cache: npm
 
-      - run: npm ci --no-audit --no-fund
-      - run: npm install --no-save --no-audit --no-fund eslint@10 @eslint/js@10
+      - name: Install as an ESLint 10 consumer would (the Next stack still pins ESLint 9)
+        run: |
+          npm pkg delete devDependencies.eslint-config-next devDependencies.next devDependencies.react devDependencies.react-dom devDependencies.@types/react
+          npm pkg set devDependencies.eslint=^10.0.0 devDependencies.@eslint/js=^10.0.0
+          rm package-lock.json
+          npm install --no-audit --no-fund
       - run: node --test test/eslint.test.mjs test/prettier.test.mjs
