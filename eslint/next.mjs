@@ -15,7 +15,7 @@ export const REACT_COMPILER_RULES = [
 ].sort();
 
 /**
- * Next.js apps (backoffice, platform). Needs `eslint-config-next` installed in the app, and ESLint 9.
+ * Next.js apps. Needs `eslint-config-next` installed in the app, and ESLint 9.
  * The React Compiler rules that eslint-config-next enables stay off unless the app uses the compiler.
  * @param {import('./core.mjs').KillbOptions & { reactCompiler?: boolean }} options
  */

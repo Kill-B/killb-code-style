@@ -39,11 +39,11 @@ import { node } from '@killb/code-style/eslint';
 export default defineConfig(node({ tsconfigRootDir: import.meta.dirname }));
 ```
 
-| Preset | Import                          | For                                                                                                |
-| ------ | ------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `node` | `@killb/code-style/eslint`      | services, Cloud Functions, MCP servers, agents (tarantino-v2, serveless, killb-agents, killb-mcps) |
-| `base` | `@killb/code-style/eslint`      | runtime-agnostic libraries (sdk)                                                                   |
-| `next` | `@killb/code-style/eslint/next` | Next.js apps (backoffice, platform)                                                                |
+| Preset | Import                          | For                                                           |
+| ------ | ------------------------------- | ------------------------------------------------------------- |
+| `node` | `@killb/code-style/eslint`      | services, Cloud Functions, MCP servers and other Node.js apps |
+| `base` | `@killb/code-style/eslint`      | runtime-agnostic libraries, such as API client SDKs           |
+| `next` | `@killb/code-style/eslint/next` | Next.js apps                                                  |
 
 Options (all presets):
 
@@ -67,6 +67,21 @@ Options (all presets):
 - `eslint-config-prettier` last, so ESLint never fights Prettier.
 
 `node` adds Node globals and `no-console` in `src/`. `next` adds `eslint-config-next/core-web-vitals` with `react-hooks/rules-of-hooks` and `exhaustive-deps` as errors. The React Compiler rules that `eslint-config-next` 16 turns on stay off unless `reactCompiler: true`: they check code for the compiler, and without it they flag working code.
+
+### Type-aware parsing in large repos
+
+By default the presets parse with typescript-eslint's `projectService`, which finds the nearest `tsconfig.json` for each file. In a large repo it can use much more memory than a single program. In a NestJS API of about 2,000 files it peaked at 3.1 GB and ran out of heap in CI.
+
+If lint runs out of memory, point the parser at one tsconfig instead:
+
+```js
+node({
+  tsconfigRootDir: import.meta.dirname,
+  parserOptions: { projectService: false, project: './tsconfig.json' },
+});
+```
+
+That tsconfig must include every file ESLint lints (src, tests, scripts). In that API, this brought the peak down to 2.4 GB. Use the same option when the default tsconfig leaves files out, for example with a `tsconfig.eslint.json` that adds the tests.
 
 ### Repo-specific rules
 
