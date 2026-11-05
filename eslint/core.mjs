@@ -8,7 +8,7 @@ import tseslint from 'typescript-eslint';
 export const TS_FILES = ['**/*.{ts,tsx,mts,cts}'];
 export const JS_FILES = ['**/*.{js,jsx,mjs,cjs}'];
 
-export const DEFAULT_IGNORES = ['dist/**', 'build/**', 'coverage/**', '.next/**', 'out/**', '**/*.d.ts'];
+export const DEFAULT_IGNORES = ['**/dist/**', '**/build/**', '**/coverage/**', '**/.next/**', '**/out/**', '**/*.d.ts'];
 
 /**
  * @typedef {object} KillbOptions

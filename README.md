@@ -47,14 +47,14 @@ export default defineConfig(node({ tsconfigRootDir: import.meta.dirname }));
 
 Options (all presets):
 
-| Option                  | Default                                | What                                                                         |
-| ----------------------- | -------------------------------------- | ---------------------------------------------------------------------------- |
-| `tsconfigRootDir`       | required                               | `import.meta.dirname`                                                        |
-| `ignores`               | `[]`                                   | extra globs, on top of `dist`, `build`, `coverage`, `.next`, `out`, `*.d.ts` |
-| `parserOptions`         | `{ projectService: true }`             | e.g. `{ projectService: false, project: './tsconfig.eslint.json' }`          |
-| `internalPattern`       | `['^src/', '^@/', '^~/']`              | imports sorted as internal                                                   |
-| `allowConsole` (`node`) | `[]`                                   | console methods allowed in `src/`, e.g. `['error']` for MCP stdio servers    |
-| `appFiles` (`node`)     | `['src/**/*.{ts,mts,cts,js,mjs,cjs}']` | where `no-console` applies (tests and migrations excluded)                   |
+| Option                  | Default                                   | What                                                                                             |
+| ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `tsconfigRootDir`       | required                                  | `import.meta.dirname`                                                                            |
+| `ignores`               | `[]`                                      | extra globs, on top of `dist`, `build`, `coverage`, `.next` and `out` at any depth, and `*.d.ts` |
+| `parserOptions`         | `{ projectService: true }`                | e.g. `{ projectService: false, project: './tsconfig.eslint.json' }`                              |
+| `internalPattern`       | `['^src/', '^@/', '^~/']`                 | imports sorted as internal                                                                       |
+| `allowConsole` (`node`) | `[]`                                      | console methods allowed in `src/`, e.g. `['error']` for MCP stdio servers                        |
+| `appFiles` (`node`)     | `['**/src/**/*.{ts,mts,cts,js,mjs,cjs}']` | where `no-console` applies: any `src/`, so workspaces work too (tests and migrations excluded)   |
 
 ### What every preset enforces
 

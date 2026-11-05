@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
 import { base, node } from '../eslint/index.mjs';
-import { lint } from './lint.mjs';
+import { lint, lintIgnored } from './lint.mjs';
 
 describe('base', () => {
   it('throws without tsconfigRootDir', () => {
@@ -36,5 +36,17 @@ describe('node', () => {
   it('allows the console methods listed in allowConsole', async () => {
     const rules = await lint(o => node({ ...o, allowConsole: ['log'] }), 'node', 'src/dirty.ts');
     assert.ok(!rules.includes('no-console'));
+  });
+});
+
+describe('monorepo layout', () => {
+  it('applies no-console to src/ in nested packages', async () => {
+    const rules = await lint(node, 'monorepo', 'packages/app/src/log.ts');
+    assert.deepEqual(rules, ['no-console']);
+  });
+
+  it('ignores build output in nested packages', async () => {
+    const { ignored } = await lintIgnored(node, 'monorepo', 'packages/app/dist/log.js');
+    assert.equal(ignored, true);
   });
 });
