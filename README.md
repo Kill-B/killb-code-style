@@ -47,14 +47,15 @@ export default defineConfig(node({ tsconfigRootDir: import.meta.dirname }));
 
 Options (all presets):
 
-| Option                  | Default                                   | What                                                                                             |
-| ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `tsconfigRootDir`       | required                                  | `import.meta.dirname`                                                                            |
-| `ignores`               | `[]`                                      | extra globs, on top of `dist`, `build`, `coverage`, `.next` and `out` at any depth, and `*.d.ts` |
-| `parserOptions`         | `{ projectService: true }`                | e.g. `{ projectService: false, project: './tsconfig.eslint.json' }`                              |
-| `internalPattern`       | `['^src/', '^@/', '^~/']`                 | imports sorted as internal                                                                       |
-| `allowConsole` (`node`) | `[]`                                      | console methods allowed in `src/`, e.g. `['error']` for MCP stdio servers                        |
-| `appFiles` (`node`)     | `['**/src/**/*.{ts,mts,cts,js,mjs,cjs}']` | where `no-console` applies: any `src/`, so workspaces work too (tests and migrations excluded)   |
+| Option                   | Default                                   | What                                                                                                                                                             |
+| ------------------------ | ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `tsconfigRootDir`        | required                                  | `import.meta.dirname`                                                                                                                                            |
+| `ignores`                | `[]`                                      | extra globs, on top of `dist`, `build`, `coverage`, `.next` and `out` at any depth, and `*.d.ts`                                                                 |
+| `parserOptions`          | `{ projectService: true }`                | e.g. `{ projectService: false, project: './tsconfig.eslint.json' }`                                                                                              |
+| `internalPattern`        | `['^src/', '^@/', '^~/']`                 | imports sorted as internal                                                                                                                                       |
+| `allowConsole` (`node`)  | `[]`                                      | console methods allowed in `src/`, e.g. `['error']` for MCP stdio servers                                                                                        |
+| `reactCompiler` (`next`) | `false`                                   | turns on the React Compiler rules from `eslint-config-next` (`set-state-in-effect`, `immutability`, `refs`, `purity`…); enable it when the app uses the compiler |
+| `appFiles` (`node`)      | `['**/src/**/*.{ts,mts,cts,js,mjs,cjs}']` | where `no-console` applies: any `src/`, so workspaces work too (tests and migrations excluded)                                                                   |
 
 ### What every preset enforces
 
@@ -65,7 +66,7 @@ Options (all presets):
 - Sorted imports and named imports/exports (autofixable).
 - `eslint-config-prettier` last, so ESLint never fights Prettier.
 
-`node` adds Node globals and `no-console` in `src/`. `next` adds `eslint-config-next/core-web-vitals` with `react-hooks/rules-of-hooks` and `exhaustive-deps` as errors.
+`node` adds Node globals and `no-console` in `src/`. `next` adds `eslint-config-next/core-web-vitals` with `react-hooks/rules-of-hooks` and `exhaustive-deps` as errors. The React Compiler rules that `eslint-config-next` 16 turns on stay off unless `reactCompiler: true`: they check code for the compiler, and without it they flag working code.
 
 ### Repo-specific rules
 
